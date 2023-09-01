@@ -132,6 +132,8 @@ module.exports = (server,knex)=> {
             
                 .groupBy('p.idprinter')
                 .groupBy('Respistoken')
+                .groupBy('Respqtd')
+                
             
             .then(async (dados)=>{ 
                 //console.log(dados);              
