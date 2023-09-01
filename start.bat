@@ -1,1 +1,1 @@
-pm2 start "D:\OneDrive\OurSoft\Systems\Source\Production\Code\XPastel\Node\Index.js"
+pm2 start "F:\OurSoft\Node\Index.js"
