@@ -13,7 +13,7 @@
     "knex": "^0.20.13",
     "mysql": "^2.18.1",
     "mysqldump": "^3.1.0",
-    "restify": "^8.5.1",
+    "restify": "^10.0.0",
     "restify-cors-middleware2": "^2.1.2",
     "restify-errors": "^8.0.2"
   }
