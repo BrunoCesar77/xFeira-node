@@ -116,10 +116,11 @@ module.exports = (server,knex)=> {
 
             knex 
                 .select(                   
-                        knex.raw('if(p.idprinter>0, p.idprinter ,p.idprintermain) AS idprinter'),  
+                        knex.raw('if(p.idprinter>0, p.idprinter ,u.idprintermain) AS idprinter'),  
                         knex.raw('if(g.istoken=0, 0 ,si.idsaleitem) AS Respistoken'), 
                         knex.raw('if(g.istoken=0, 1 ,si.qtd) AS Respqtd'), 
-                        knex.raw('GROUP_CONCAT(si.idsaleitem) as idkeys')                                                                 
+                        knex.raw('MAX(u.idprintermain) as idprintermain'),
+                        knex.raw('GROUP_CONCAT(si.idsaleitem) as idkeys')                                                                   
                        )
                 .from({ si: 'sales_items'}) 
             
@@ -138,16 +139,21 @@ module.exports = (server,knex)=> {
             
             .then(async (dados)=>{ 
                 //console.log(dados);              
-                if (dados.length>0) {       
+                if (dados.length>0) {  
+                    var Lidprintermain = dados[0].idprintermain;
+                    if (Lidprintermain<0) {
+                        Lidprintermain=1;
+                    }
+                    console.log(Lidprintermain); 
                     PasswordKey = await cfg.GetGen_PasswordKey();
                     //console.log(PasswordKey);
 
-                    cfg.SetPrintres_Queue(1,undefined,PasswordKey,typeprint.tpOpenDrawer);//Abrir Gaveta               
+                    cfg.SetPrintres_Queue(Lidprintermain,undefined,PasswordKey,typeprint.tpOpenDrawer);//Abrir Gaveta               
 
                     Istoken = await cfg.GetIstoken(); 
                    // console.log(Istoken[0]);
                     if (Istoken[0].qtd>0) {                      
-                        cfg.SetPrintres_Queue(1,id,PasswordKey,typeprint.tpPassWord);
+                        cfg.SetPrintres_Queue(Lidprintermain,id,PasswordKey,typeprint.tpPassWord);
                     }
                     
 
