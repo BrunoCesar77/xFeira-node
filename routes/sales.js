@@ -115,8 +115,8 @@ module.exports = (server,knex)=> {
                 }
 
             knex 
-                .select(                     
-                        'p.idprinter',  
+                .select(                   
+                        knex.raw('if(p.idprinter>0, p.idprinter ,u.idprintermain) AS idprinter'),  
                         knex.raw('if(g.istoken=0, 0 ,si.idsaleitem) AS Respistoken'), 
                         knex.raw('if(g.istoken=0, 1 ,si.qtd) AS Respqtd'), 
                         knex.raw('GROUP_CONCAT(si.idsaleitem) as idkeys')                                                                 
@@ -125,12 +125,13 @@ module.exports = (server,knex)=> {
             
                 .innerJoin({ p: 'products'}, 'p.idproduct', '=', 'si.idproduct') 
                 .innerJoin({ g: 'groups'}, 'g.idgroup', '=', 'p.idgroup') 
-            
+                .innerJoin({ s: 'sales'}, 's.idsale', '=', 'si.idsale')
+                .leftJoin({ u: 'users'}, 'u.iduser', '=', 's.iduser')  
                 .where('si.idsale',id)
             
-                .where('p.idprinter','>',0)
+                //.where('p.idprinter','>',0)
             
-                .groupBy('p.idprinter')
+                .groupBy('idprinter')
                 .groupBy('Respistoken')
                 .groupBy('Respqtd')
                 

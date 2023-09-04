@@ -6,7 +6,7 @@ module.exports = (server,knex)=> {
         if (cSql.sql == undefined) {
             cSql.sql= 'select * from sales';
         }
-        console.log(cSql);     
+       // console.log(cSql);     
   
         knex    .raw(cSql.sql)
 
