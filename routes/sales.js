@@ -73,7 +73,7 @@ module.exports = (server,knex)=> {
                                 idtypeprint : typeprint.tpProductsProduction
                             }];
 
-                            console.log(sSql);
+                           // console.log(sSql);
                 
                             knex('printers_queue')
                             .insert(sSql)
@@ -91,7 +91,7 @@ module.exports = (server,knex)=> {
                             password : aPasswordKey,
                             idtypeprint : aidtypeprint 
                         }];
-                        console.log( sSql );
+                      //  console.log( sSql );
                         knex('printers_queue')
                         .insert(sSql)
                         .then((resp)=>{ 
