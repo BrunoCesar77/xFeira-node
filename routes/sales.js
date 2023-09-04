@@ -116,7 +116,7 @@ module.exports = (server,knex)=> {
 
             knex 
                 .select(                   
-                        knex.raw('if(p.idprinter>0, p.idprinter ,u.idprintermain) AS idprinter'),  
+                        knex.raw('if(p.idprinter>0, p.idprinter ,p.idprintermain) AS idprinter'),  
                         knex.raw('if(g.istoken=0, 0 ,si.idsaleitem) AS Respistoken'), 
                         knex.raw('if(g.istoken=0, 1 ,si.qtd) AS Respqtd'), 
                         knex.raw('GROUP_CONCAT(si.idsaleitem) as idkeys')                                                                 
@@ -140,12 +140,12 @@ module.exports = (server,knex)=> {
                 //console.log(dados);              
                 if (dados.length>0) {       
                     PasswordKey = await cfg.GetGen_PasswordKey();
-                    console.log(PasswordKey);
+                    //console.log(PasswordKey);
 
                     cfg.SetPrintres_Queue(1,undefined,PasswordKey,typeprint.tpOpenDrawer);//Abrir Gaveta               
 
                     Istoken = await cfg.GetIstoken(); 
-                    console.log(Istoken[0]);
+                   // console.log(Istoken[0]);
                     if (Istoken[0].qtd>0) {                      
                         cfg.SetPrintres_Queue(1,id,PasswordKey,typeprint.tpPassWord);
                     }
@@ -177,7 +177,7 @@ module.exports = (server,knex)=> {
         if (cwhere == undefined) {
             cwhere = { afields: [ "s.*" ], awhere: { idsale: [ 0 ]} }
         }
-        console.log(cwhere);     
+      //  console.log(cwhere);     
       
         knex    .select(cwhere.afields)
                 .from({ s: 'sales'})
