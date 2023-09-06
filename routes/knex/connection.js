@@ -7,7 +7,7 @@ const  cfg =
     user : 'root',
     password : '1234'
   }
-}
+}sdfsdfdsfsdf
 // fgfgfggfgfgfg
 module.exports =  cfg;
   
